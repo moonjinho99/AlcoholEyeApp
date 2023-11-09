@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="join_address">
+        <item>종로구</item>
+        <item>서대문구</item>
+        <item>송파구</item>
+        <item>양천구</item>
+        <item>강남구</item>
+        <item>강동구</item>
+        <item>성북구</item>
+        <item>도봉구</item>
+    </string-array>
+</resources>
