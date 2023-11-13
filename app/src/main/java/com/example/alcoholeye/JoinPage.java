@@ -22,8 +22,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -145,9 +150,6 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
         service = retrofit.create(ApiService.class);
     }
 
-    /**
-     * View.OnLongClickListener override method
-     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -204,17 +206,56 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
                 break;
 
             case R.id.join_end_btn:
+
                 try{
                     id = join_id.getText().toString();
                     pw = join_pw.getText().toString();
                     username = join_username.getText().toString();
 
+
+                    String hashpw = BCrypt.withDefaults().hashToString(12, pw.toCharArray());
+
                     data.accumulate("join_id",id);
-                    data.accumulate("join_pw",pw);
+                    data.accumulate("join_pw",hashpw);
                     data.accumulate("join_username",username);
                     data.accumulate("join_address",address);
                     data.accumulate("join_img",img_path);
 
+//                    RequestBody idRequestBody = RequestBody.create(MediaType.parse("text/plain"), id);
+//                    RequestBody pwRequestBody = RequestBody.create(MediaType.parse("text/plain"), pw);
+//                    RequestBody usernameRequestBody = RequestBody.create(MediaType.parse("text/plain"), username);
+//                    RequestBody addressRequestBody = RequestBody.create(MediaType.parse("text/plain"), address);
+//
+//                    MultipartBody.Part imagePart = prepareFilePart("join_img", img_path);
+//
+//                    Call<ResponseBody> call = service.uploadImage(idRequestBody, pwRequestBody, usernameRequestBody, addressRequestBody, imagePart);
+//
+//                    call.enqueue(new Callback<ResponseBody>() {
+//                        @Override
+//                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                            if (response.isSuccessful()) {
+//                                try {
+//                                    String result = response.body().string();
+//                                    Log.v(TAG, "result = " + result);
+//                                    Toast.makeText(getApplicationContext(), "회원 가입에 성공했습니다.", Toast.LENGTH_SHORT).show();
+//                                    Intent intent = new Intent(JoinPage.this,MainActivity.class);
+//                                    startActivity(intent);
+//
+//                                } catch (IOException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            } else {
+//                                Log.v(TAG, "error = " + String.valueOf(response.code()));
+//                                Toast.makeText(getApplicationContext(), "error = " + String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                            Log.v(TAG, "Fail");
+//                            Toast.makeText(getApplicationContext(), "Response Fail", Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
                 } catch (Exception e)
                 {
                     e.printStackTrace();
@@ -256,6 +297,12 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
                 break;
 
         }
+    }
+
+    private MultipartBody.Part prepareFilePart(String partName, String filePath) {
+        File file = new File(filePath);
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
+        return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
 
 }

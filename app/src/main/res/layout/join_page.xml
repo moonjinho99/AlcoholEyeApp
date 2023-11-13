@@ -179,7 +179,7 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="거주지"
+                android:text="노선"
                 android:textStyle="bold"
                 android:textSize="20dp" />
 
