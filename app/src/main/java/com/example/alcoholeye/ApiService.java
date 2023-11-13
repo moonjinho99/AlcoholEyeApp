@@ -30,6 +30,8 @@ public interface ApiService {
     Call<ResponseBody> idCheck(@Query("data") JSONObject data);
     @GET("/api/signUp")
     Call<ResponseBody> signUp(@Query("data") JSONObject data);
+    @GET("/api/signIn")
+    Call<ResponseBody> signIn(@Query("data") JSONObject data);
     //Call<ResponseBody> getFunc(@Query("data") String data);
 
 //    @FormUrlEncoded
