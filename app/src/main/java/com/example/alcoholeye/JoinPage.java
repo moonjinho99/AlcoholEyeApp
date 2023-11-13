@@ -192,14 +192,13 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
             //아이디 중복체크
             case R.id.join_id_check_btn:
                 try{
-                    check_data.accumulate("checkid",join_id.getText().toString());
-
+                    check_data.put("id",join_id.getText().toString());
                 } catch (Exception e)
                 {
                     e.printStackTrace();
                 }
 
-                Call<ResponseBody> call_get = service.getFunc(check_data);
+                Call<ResponseBody> call_get = service.idCheck(check_data);
                 call_get.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
