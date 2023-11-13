@@ -19,9 +19,11 @@ import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.Streaming;
 
 public interface ApiService {
     @GET("/retrofit/get")
+    @Streaming
     Call<ResponseBody> getFunc(@Query("data") JSONObject data);
     //Call<ResponseBody> getFunc(@Query("data") String data);
 
@@ -35,19 +37,6 @@ public interface ApiService {
 //
 //    @DELETE("/retrofit/delete/{id}")
 //    Call<ResponseBody> deleteFunc(@Path("id") String id);
-
-    @Headers({
-            "Content-Type: multipart/form-data"
-    })
-    @Multipart
-    @POST("your_image_upload_endpoint")
-    Call<ResponseBody> uploadImage(
-            @Part("join_id") RequestBody id,
-            @Part("join_pw") RequestBody pw,
-            @Part("join_username") RequestBody username,
-            @Part("join_address") RequestBody address,
-            @Part MultipartBody.Part image
-    );
 
 
 }

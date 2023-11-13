@@ -3,11 +3,15 @@ package com.example.alcoholeye;
 import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,7 +26,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
@@ -47,7 +53,7 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
     ImageView userImg;
     Spinner addressSpin;
 
-    int idcheckres = 0;
+    int idcheckres = 1;
 
     Uri uri;
     String img_path;
@@ -214,48 +220,23 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
 
 
                     String hashpw = BCrypt.withDefaults().hashToString(12, pw.toCharArray());
+                    // 이미지를 비트맵으로 변환
+                    Bitmap bitmap = resize(decodeFile(img_path));
+
+                    // 비트맵을 압축하고 byte 배열로 변환
+                    byte[] byteArray = compressBitmapToByteArray(bitmap);
+
+                    // byte 배열을 Base64로 인코딩
+                    String base64Image = encodeByteArrayToBase64(byteArray);
+
+                    Log.e("base64",base64Image);
 
                     data.accumulate("join_id",id);
                     data.accumulate("join_pw",hashpw);
                     data.accumulate("join_username",username);
                     data.accumulate("join_address",address);
-                    data.accumulate("join_img",img_path);
+                    data.accumulate("join_img",base64Image);
 
-//                    RequestBody idRequestBody = RequestBody.create(MediaType.parse("text/plain"), id);
-//                    RequestBody pwRequestBody = RequestBody.create(MediaType.parse("text/plain"), pw);
-//                    RequestBody usernameRequestBody = RequestBody.create(MediaType.parse("text/plain"), username);
-//                    RequestBody addressRequestBody = RequestBody.create(MediaType.parse("text/plain"), address);
-//
-//                    MultipartBody.Part imagePart = prepareFilePart("join_img", img_path);
-//
-//                    Call<ResponseBody> call = service.uploadImage(idRequestBody, pwRequestBody, usernameRequestBody, addressRequestBody, imagePart);
-//
-//                    call.enqueue(new Callback<ResponseBody>() {
-//                        @Override
-//                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                            if (response.isSuccessful()) {
-//                                try {
-//                                    String result = response.body().string();
-//                                    Log.v(TAG, "result = " + result);
-//                                    Toast.makeText(getApplicationContext(), "회원 가입에 성공했습니다.", Toast.LENGTH_SHORT).show();
-//                                    Intent intent = new Intent(JoinPage.this,MainActivity.class);
-//                                    startActivity(intent);
-//
-//                                } catch (IOException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            } else {
-//                                Log.v(TAG, "error = " + String.valueOf(response.code()));
-//                                Toast.makeText(getApplicationContext(), "error = " + String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-//                            Log.v(TAG, "Fail");
-//                            Toast.makeText(getApplicationContext(), "Response Fail", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
                 } catch (Exception e)
                 {
                     e.printStackTrace();
@@ -279,6 +260,7 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
                                     e.printStackTrace();
                                 }
                             } else {
+
                                 Log.v(TAG, "error = " + String.valueOf(response.code()));
                                 Toast.makeText(getApplicationContext(), "error = " + String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
                             }
@@ -299,10 +281,48 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
         }
     }
 
-    private MultipartBody.Part prepareFilePart(String partName, String filePath) {
-        File file = new File(filePath);
-        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
-        return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
+    // 이미지를 비트맵으로 변환하는 메서드
+    private Bitmap decodeFile(String imagePath) {
+        try {
+            File file = new File(imagePath);
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+            return BitmapFactory.decodeFile(file.getAbsolutePath(), options);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // 비트맵을 압축하고 byte 배열로 변환하는 메서드
+    private byte[] compressBitmapToByteArray(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
+    }
+
+    private Bitmap resize(Bitmap bm)
+    {
+        Configuration config = getResources().getConfiguration();
+
+        if(config.smallestScreenWidthDp >=800)
+            bm = Bitmap.createScaledBitmap(bm,400,240,true);
+        else if(config.smallestScreenWidthDp >=600)
+            bm = Bitmap.createScaledBitmap(bm,300,180,true);
+        else if(config.smallestScreenWidthDp >=400)
+            bm = Bitmap.createScaledBitmap(bm,200,120,true);
+        else if(config.smallestScreenWidthDp >=360)
+            bm = Bitmap.createScaledBitmap(bm,180,108,true);
+        else
+            bm = Bitmap.createScaledBitmap(bm,160,96,true);
+
+        return bm;
+    }
+
+
+    // byte 배열을 Base64로 인코딩하는 메서드
+    private String encodeByteArrayToBase64(byte[] byteArray) {
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 
 }
