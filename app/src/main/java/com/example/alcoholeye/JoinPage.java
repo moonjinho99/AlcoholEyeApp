@@ -16,8 +16,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,6 +55,10 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
     ImageView userImg;
     Spinner addressSpin;
 
+    RadioGroup gender_radio;
+
+    DatePicker birth_datepicker;
+
     int idcheckres = 1;
 
     Uri uri;
@@ -61,6 +67,10 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
     String id;
     String pw;
     String username;
+
+    String birth;
+
+    String gender;
 
     private JSONObject data = new JSONObject();
 
@@ -76,6 +86,22 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
 
         id_check_btn.setOnClickListener(this);
         join_btn.setOnClickListener(this);
+
+        gender_radio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.male_radio:
+                        gender="남";
+                        break;
+
+                    case R.id.female_radio:
+                        Toast.makeText(getApplicationContext(),"여",Toast.LENGTH_SHORT).show();
+                        gender="여";
+                        break;
+                }
+            }
+        });
 
         userImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,6 +174,9 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
         id_check_btn = (Button) findViewById(R.id.join_id_check_btn);
         id_check_msg = (TextView) findViewById(R.id.id_check_msg);
         join_username = (EditText) findViewById(R.id.join_username);
+        gender_radio = (RadioGroup) findViewById(R.id.geder_raio);
+        birth_datepicker = (DatePicker) findViewById(R.id.birth_datepicker);
+
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(MainActivity.URL)
@@ -217,7 +246,9 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
                     id = join_id.getText().toString();
                     pw = join_pw.getText().toString();
                     username = join_username.getText().toString();
+                    birth = Integer.toString(birth_datepicker.getYear())+Integer.toString(birth_datepicker.getMonth()+1)+Integer.toString(birth_datepicker.getDayOfMonth());
 
+                    Log.e("birth",birth);
 
                     String hashpw = BCrypt.withDefaults().hashToString(12, pw.toCharArray());
                     // 이미지를 비트맵으로 변환
@@ -236,6 +267,8 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
                     data.accumulate("join_username",username);
                     data.accumulate("join_address",address);
                     data.accumulate("join_img",base64Image);
+                    data.accumulate("join_birth",birth);
+                    data.accumulate("join_gender",gender);
 
                 } catch (Exception e)
                 {
