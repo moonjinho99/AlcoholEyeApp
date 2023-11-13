@@ -277,7 +277,7 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
 
                 if(idcheckres == 1)
                 {
-                    Call<ResponseBody> call_get_join = service.getFunc(data);
+                    Call<ResponseBody> call_get_join = service.signUp(data);
                     call_get_join.enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
