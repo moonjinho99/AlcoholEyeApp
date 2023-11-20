@@ -29,6 +29,7 @@ public interface ApiService {
     @GET("/api/idCheck")
     Call<ResponseBody> idCheck(@Query("data") JSONObject data);
     //서버 엔드포인트로 데이터 전송
+    
     @Multipart
     @POST("/api/signUp")
     Call<ResponseBody> signUp(
@@ -39,6 +40,16 @@ public interface ApiService {
     @GET("/api/signIn")
     Call<ResponseBody> signIn(@Query("data") JSONObject data);
     //Call<ResponseBody> getFunc(@Query("data") String data);
+
+    //회원의 얼굴과 일치하는지 촬영 후 사진 전송
+    @Multipart
+    @POST("/api/checkUserImg")
+    Call<ResponseBody> checkUserImg(
+            @Part MultipartBody.Part check_img // 이미지를 담을 Part
+    );
+    //알코올 측정값 전송
+    @GET("/api/alcohol")
+    Call<ResponseBody> inputAlcohol(@Query("data") JSONObject data);
 
 //    @FormUrlEncoded
 //    @POST("/retrofit/post")

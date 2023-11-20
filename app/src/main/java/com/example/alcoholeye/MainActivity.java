@@ -25,7 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private final String TAG = "MainActivityLog";
-    public static final String URL = "http://192.168.0.91:3000/";
+    public static final String URL = "http://172.16.24.141:8090/";
 
     private Retrofit retrofit;
     private ApiService service;
@@ -93,6 +93,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 String result = response.body().string();
                                 Log.v(TAG, "result = " + result);
                                 Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                                if(result.equals("OK"))
+                                {
+                                    Intent intent = new Intent(MainActivity.this,MainPage.class);
+                                    startActivity(intent);
+                                }
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }

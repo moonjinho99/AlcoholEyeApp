@@ -49,7 +49,6 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
     private final String TAG = "JoinPageLog";
     private Retrofit retrofit;
     private ApiService service;
-
     EditText join_id, join_pw,join_username;
     Button join_btn,id_check_btn;
     TextView id_check_msg;
@@ -98,7 +97,6 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
                         break;
 
                     case R.id.female_radio:
-                        Toast.makeText(getApplicationContext(),"여",Toast.LENGTH_SHORT).show();
                         gender="여";
                         break;
                 }
@@ -250,6 +248,7 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
                     username = join_username.getText().toString();
                     birth = Integer.toString(birth_datepicker.getYear())+Integer.toString(birth_datepicker.getMonth()+1)+Integer.toString(birth_datepicker.getDayOfMonth());
                     Log.e("birth",birth);
+
                     File photoFile = new File(img_path);
                     RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), photoFile);
                     photo = MultipartBody.Part.createFormData("join_img", photoFile.getName(), requestFile);
