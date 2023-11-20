@@ -28,8 +28,14 @@ public interface ApiService {
 
     @GET("/api/idCheck")
     Call<ResponseBody> idCheck(@Query("data") JSONObject data);
-    @GET("/api/signUp")
-    Call<ResponseBody> signUp(@Query("data") JSONObject data);
+    //서버 엔드포인트로 데이터 전송
+    @Multipart
+    @POST("/api/signUp")
+    Call<ResponseBody> signUp(
+        @Part("UserData") JSONObject signUpData,
+        @Part MultipartBody.Part join_img // 이미지를 담을 Part
+    );
+
     @GET("/api/signIn")
     Call<ResponseBody> signIn(@Query("data") JSONObject data);
     //Call<ResponseBody> getFunc(@Query("data") String data);

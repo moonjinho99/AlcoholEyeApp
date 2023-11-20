@@ -36,6 +36,7 @@ import java.io.IOException;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -66,16 +67,16 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
     String address;
     String id;
     String pw;
+    String hashpw;
     String username;
 
     String birth;
 
     String gender;
 
-    private JSONObject data = new JSONObject();
-
     private JSONObject check_data = new JSONObject();
-
+    private JSONObject signUpData = new JSONObject();
+    MultipartBody.Part photo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -245,31 +246,21 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
                 try{
                     id = join_id.getText().toString();
                     pw = join_pw.getText().toString();
+                    hashpw = BCrypt.withDefaults().hashToString(12, pw.toCharArray());
                     username = join_username.getText().toString();
                     birth = Integer.toString(birth_datepicker.getYear())+Integer.toString(birth_datepicker.getMonth()+1)+Integer.toString(birth_datepicker.getDayOfMonth());
-
                     Log.e("birth",birth);
+                    File photoFile = new File(img_path);
+                    RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), photoFile);
+                    photo = MultipartBody.Part.createFormData("join_img", photoFile.getName(), requestFile);
+                    Toast.makeText(getApplicationContext(), id, Toast.LENGTH_SHORT).show();
 
-                    String hashpw = BCrypt.withDefaults().hashToString(12, pw.toCharArray());
-                    // 이미지를 비트맵으로 변환
-                    Bitmap bitmap = resize(decodeFile(img_path));
-
-                    // 비트맵을 압축하고 byte 배열로 변환
-                    byte[] byteArray = compressBitmapToByteArray(bitmap);
-
-                    // byte 배열을 Base64로 인코딩
-                    String base64Image = encodeByteArrayToBase64(byteArray);
-
-                    Log.e("base64",base64Image);
-
-                    data.accumulate("join_id",id);
-                    data.accumulate("join_pw",hashpw);
-                    data.accumulate("join_username",username);
-                    data.accumulate("join_address",address);
-                    data.accumulate("join_img",base64Image);
-                    data.accumulate("join_birth",birth);
-                    data.accumulate("join_gender",gender);
-
+                    signUpData.put("id",id);
+                    signUpData.put("pw",hashpw);
+                    signUpData.put("name",username);
+                    signUpData.put("address",address);
+                    signUpData.put("birth",birth);
+                    signUpData.put("gender",gender);
                 } catch (Exception e)
                 {
                     e.printStackTrace();
@@ -277,7 +268,8 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
 
                 if(idcheckres == 1)
                 {
-                    Call<ResponseBody> call_get_join = service.signUp(data);
+                    //ApiService에 저장된 함수 실행
+                    Call<ResponseBody> call_get_join = service.signUp( signUpData, photo );
                     call_get_join.enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
