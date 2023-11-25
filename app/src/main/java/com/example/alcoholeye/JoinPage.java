@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import org.json.JSONObject;
 
@@ -32,6 +34,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import okhttp3.MediaType;
@@ -46,6 +50,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class JoinPage extends AppCompatActivity implements View.OnClickListener {
+
+    private static  int REQUEST_IMAGE_CAPTURE = 1;
+    private String imageFilePath;
+    //private String photoUri;
+    private Uri photoUri;
+
+
     private final String TAG = "JoinPageLog";
     private Retrofit retrofit;
     private ApiService service;
@@ -106,9 +117,11 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
         userImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
+                /*Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType("image/*");
-                startActivityForResult(intent,1);
+                startActivityForResult(intent,1);*/
+
+                sendTakePhotoIntent();
             }
         });
 
@@ -126,7 +139,7 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
         });
     }
 
-    @Override
+   /* @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -142,10 +155,10 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
                 }
                 break;
         }
-    }
+    }*/
 
     //실제 경로
-    private String getRealPathFromURI(Uri contentURI) {
+   /* private String getRealPathFromURI(Uri contentURI) {
 
         String result;
 
@@ -160,7 +173,7 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
             cursor.close();
         }
         return result;
-    }
+    }*/
 
     /**
      * Init
@@ -249,7 +262,7 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
                     birth = Integer.toString(birth_datepicker.getYear())+Integer.toString(birth_datepicker.getMonth()+1)+Integer.toString(birth_datepicker.getDayOfMonth());
                     Log.e("birth",birth);
 
-                    File photoFile = new File(img_path);
+                    File photoFile = new File(imageFilePath);
                     RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), photoFile);
                     photo = MultipartBody.Part.createFormData("join_img", photoFile.getName(), requestFile);
 
@@ -347,6 +360,46 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
     // byte 배열을 Base64로 인코딩하는 메서드
     private String encodeByteArrayToBase64(byte[] byteArray) {
         return Base64.encodeToString(byteArray, Base64.DEFAULT);
+    }
+
+
+    private void sendTakePhotoIntent() {
+
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+            }
+
+            if (photoFile != null) {
+                photoUri = FileProvider.getUriForFile(this, getPackageName(), photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            ((ImageView) findViewById(R.id.join_user_img)).setImageURI(photoUri);
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "TEST_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,      /* prefix */
+                ".jpg",         /* suffix */
+                storageDir          /* directory */
+        );
+        imageFilePath = image.getAbsolutePath();
+        return image;
     }
 
 }
