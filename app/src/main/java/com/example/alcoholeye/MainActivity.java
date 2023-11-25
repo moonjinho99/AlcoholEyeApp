@@ -88,6 +88,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                 if(result.equals("OK"))
                                 {
+                                    GlobalId globalId = (GlobalId) getApplication();
+                                    globalId.setUserId(userid.getText().toString());
                                     Toast.makeText(getApplicationContext(),"안녕하세요! 알코올아이입니다.",Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(MainActivity.this,MainPage.class);
                                     startActivity(intent);

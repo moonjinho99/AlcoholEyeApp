@@ -45,6 +45,7 @@ public interface ApiService {
     @Multipart
     @POST("/api/checkUserImg")
     Call<ResponseBody> checkUserImg(
+            @Part("userId") JSONObject userId,
             @Part MultipartBody.Part check_img // 이미지를 담을 Part
     );
     //알코올 측정값 전송

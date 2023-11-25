@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -52,6 +53,7 @@ public class CheckUserFace extends AppCompatActivity {
     MultipartBody.Part photo;
 
     private JSONObject CheckUserImgData = new JSONObject();
+    private JSONObject userId = new JSONObject();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,12 +81,17 @@ public class CheckUserFace extends AppCompatActivity {
         transbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                File photoFile = new File(imageFilePath);
-                RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), photoFile);
-                photo = MultipartBody.Part.createFormData("check_img", photoFile.getName(), requestFile);
+                try {
+                    GlobalId globalId = (GlobalId) getApplication();
+                    userId.put("id", globalId.getUserId());
+                    File photoFile = new File(imageFilePath);
+                    RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), photoFile);
+                    photo = MultipartBody.Part.createFormData("check_img", photoFile.getName(), requestFile);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
 
-                Call<ResponseBody> call_check = service.checkUserImg(photo);
-
+                Call<ResponseBody> call_check = service.checkUserImg(userId, photo);
                 call_check.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
