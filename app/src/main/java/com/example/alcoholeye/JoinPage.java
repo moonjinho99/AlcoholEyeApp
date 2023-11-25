@@ -53,7 +53,7 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
 
     private static  int REQUEST_IMAGE_CAPTURE = 1;
     private String imageFilePath;
-    //private String photoUri;
+
     private Uri photoUri;
 
 
@@ -71,9 +71,6 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
     DatePicker birth_datepicker;
 
     int idcheckres = 1;
-
-    Uri uri;
-    String img_path;
     String address;
     String id;
     String pw;
@@ -139,45 +136,6 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
         });
     }
 
-   /* @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        switch (requestCode) {
-            case 1:
-                if (resultCode == RESULT_OK) {
-                    if (data != null) {
-                        uri = data.getData();
-                        userImg.setImageURI(uri);
-                        img_path = getRealPathFromURI(uri);
-                        Log.e("이미지 경로: ",img_path);
-                    }
-                }
-                break;
-        }
-    }*/
-
-    //실제 경로
-   /* private String getRealPathFromURI(Uri contentURI) {
-
-        String result;
-
-        Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
-
-        if (cursor == null) {
-            result = contentURI.getPath();
-        } else {
-            cursor.moveToFirst();
-            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-            result = cursor.getString(idx);
-            cursor.close();
-        }
-        return result;
-    }*/
-
-    /**
-     * Init
-     */
     public void firstInit() {
         join_id = (EditText) findViewById(R.id.join_id);
         join_pw = (EditText) findViewById(R.id.join_pw);
@@ -317,51 +275,6 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
 
         }
     }
-
-    // 이미지를 비트맵으로 변환하는 메서드
-    private Bitmap decodeFile(String imagePath) {
-        try {
-            File file = new File(imagePath);
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            return BitmapFactory.decodeFile(file.getAbsolutePath(), options);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    // 비트맵을 압축하고 byte 배열로 변환하는 메서드
-    private byte[] compressBitmapToByteArray(Bitmap bitmap) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
-        return byteArrayOutputStream.toByteArray();
-    }
-
-    private Bitmap resize(Bitmap bm)
-    {
-        Configuration config = getResources().getConfiguration();
-
-        if(config.smallestScreenWidthDp >=800)
-            bm = Bitmap.createScaledBitmap(bm,400,240,true);
-        else if(config.smallestScreenWidthDp >=600)
-            bm = Bitmap.createScaledBitmap(bm,300,180,true);
-        else if(config.smallestScreenWidthDp >=400)
-            bm = Bitmap.createScaledBitmap(bm,200,120,true);
-        else if(config.smallestScreenWidthDp >=360)
-            bm = Bitmap.createScaledBitmap(bm,180,108,true);
-        else
-            bm = Bitmap.createScaledBitmap(bm,160,96,true);
-
-        return bm;
-    }
-
-
-    // byte 배열을 Base64로 인코딩하는 메서드
-    private String encodeByteArrayToBase64(byte[] byteArray) {
-        return Base64.encodeToString(byteArray, Base64.DEFAULT);
-    }
-
 
     private void sendTakePhotoIntent() {
 

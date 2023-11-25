@@ -30,8 +30,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Retrofit retrofit;
     private ApiService service;
 
-    //private Button btn_get, btn_post, btn_delete, btn_update;
-
     Button login_btn,join_btn;
 
     EditText userid,userpw;
@@ -51,9 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         join_btn.setOnClickListener(this);
     }
 
-    /**
-     * Init
-     */
+
     public void firstInit() {
        login_btn = (Button) findViewById(R.id.login_btn);
        join_btn = (Button) findViewById(R.id.join_btn);
@@ -68,9 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         service = retrofit.create(ApiService.class);
     }
 
-    /**
-     * View.OnLongClickListener override method
-     */
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
