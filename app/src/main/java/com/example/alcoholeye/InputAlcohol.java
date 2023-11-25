@@ -48,6 +48,8 @@ public class InputAlcohol extends AppCompatActivity {
                 .build();
         service = retrofit.create(ApiService.class);
 
+        Toast.makeText(getApplicationContext(),"알코올 농도 측정값을 입력해주세요",Toast.LENGTH_SHORT).show();
+
         measureBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

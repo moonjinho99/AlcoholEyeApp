@@ -67,6 +67,8 @@ public class CheckUserFace extends AppCompatActivity {
         service = retrofit.create(ApiService.class);
 
 
+        Toast.makeText(getApplicationContext(),"사용자님의 사진을 찍어 전송해주세요",Toast.LENGTH_SHORT).show();
+
         userface.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,8 +79,6 @@ public class CheckUserFace extends AppCompatActivity {
         transbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),imageFilePath,Toast.LENGTH_SHORT).show();
-
                 File photoFile = new File(imageFilePath);
                 RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), photoFile);
                 photo = MultipartBody.Part.createFormData("check_img", photoFile.getName(), requestFile);

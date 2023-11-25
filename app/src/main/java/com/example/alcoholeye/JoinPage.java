@@ -252,7 +252,7 @@ public class JoinPage extends AppCompatActivity implements View.OnClickListener 
                     File photoFile = new File(img_path);
                     RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), photoFile);
                     photo = MultipartBody.Part.createFormData("join_img", photoFile.getName(), requestFile);
-                    Toast.makeText(getApplicationContext(), id, Toast.LENGTH_SHORT).show();
+
 
                     signUpData.put("id",id);
                     signUpData.put("pw",hashpw);

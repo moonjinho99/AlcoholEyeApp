@@ -114,6 +114,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="8.5"
                         android:hint="비밀번호"
+                        android:inputType="textPassword"
                         android:textSize="20dp"></EditText>
 
                     <TextView
