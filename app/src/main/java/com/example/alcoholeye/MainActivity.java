@@ -70,8 +70,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.login_btn:
                 try{
-                    data.accumulate("id",userid.getText().toString());
-                    data.accumulate("pw",userpw.getText().toString());
+                    data.put("id",userid.getText().toString());
+                    data.put("pw",userpw.getText().toString());
                 } catch (Exception e)
                 {
                     e.printStackTrace();
