@@ -87,14 +87,17 @@ public class CheckUserFace extends AppCompatActivity {
                     File photoFile = new File(imageFilePath);
                     RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), photoFile);
                     photo = MultipartBody.Part.createFormData("check_img", photoFile.getName(), requestFile);
+                    Toast.makeText(getApplicationContext(),"얼굴 분석중 입니다...",Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
 
                 Call<ResponseBody> call_check = service.checkUserImg(userId, photo);
                 call_check.enqueue(new Callback<ResponseBody>() {
+
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
                         if (response.isSuccessful()) {
                             try {
                                 String result = response.body().string();

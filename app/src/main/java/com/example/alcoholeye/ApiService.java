@@ -50,7 +50,7 @@ public interface ApiService {
     );
     //알코올 측정값 전송
     @GET("/api/alcohol")
-    Call<ResponseBody> inputAlcohol(@Query("data") JSONObject data);
+    Call<ResponseBody> inputAlcohol(@Query("alcoholData") JSONObject data);
 
 
 }

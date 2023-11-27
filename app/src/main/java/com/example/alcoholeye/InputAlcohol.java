@@ -27,6 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class InputAlcohol extends AppCompatActivity {
 
     EditText inputAlcohol;
+    EditText busName;
     Button measureBtn;
 
     private Retrofit retrofit;
@@ -40,6 +41,7 @@ public class InputAlcohol extends AppCompatActivity {
         setContentView(R.layout.input_alcohol);
 
         inputAlcohol = (EditText) findViewById(R.id.inputAlcohol);
+        busName = (EditText) findViewById(R.id.busName);
         measureBtn = (Button) findViewById(R.id.measureBtn);
 
         retrofit = new Retrofit.Builder()
@@ -55,8 +57,10 @@ public class InputAlcohol extends AppCompatActivity {
             public void onClick(View v) {
 
                 try{
+                    GlobalId globalId = (GlobalId) getApplication();
+                    alcoholData.put("id", globalId.getUserId());
                     alcoholData.put("alcohol",inputAlcohol.getText().toString());
-
+                    alcoholData.put("busName",busName.getText().toString());
                     Call<ResponseBody> call_input_alcohol = service.inputAlcohol(alcoholData);
 
                     call_input_alcohol.enqueue(new Callback<ResponseBody>() {

@@ -25,7 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private final String TAG = "MainActivityLog";
-    public static final String URL = "http://3.36.106.170:8090/";
+    public static final String URL = "http://3.36.106.170:8090";
 
     private Retrofit retrofit;
     private ApiService service;
