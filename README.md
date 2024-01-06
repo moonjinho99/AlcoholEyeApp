@@ -1,5 +1,5 @@
 # alcoholEye
-음주 측정 앱 (안드로이드)
+산학클러스터 프로젝트 : 음주 측정 앱
 
 서버 : [alcoholEye](https://github.com/jhchon/alcoholEye)
 
@@ -7,8 +7,17 @@
 - <img src="https://img.shields.io/badge/IDE-%23121011?style=for-the-badge">![Android Studio](https://img.shields.io/badge/Android%20Studio-3DDC84.svg?&style=for-the-badge&logo=Android%20Studio&logoColor=white)
 - <img src="https://img.shields.io/badge/Language-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/java-%23ED8B00?style=for-the-badge&logo=openjdk&logoColor=white"><img src="https://img.shields.io/badge/18-515151?style=for-the-badge">
 
+<br/><br/>
 <hr>
 
+## 🔍 프로젝트 게요
+
+- 시민의 안전을 보장하고 음주운전을 사전에 방지하기 위해, 보이스링크 화사에서 개발한 어플리케이션과 유사한 시스템을 구현하는 활동을 진행함
+
+- 이 시스템은 버스 운행 전 음주 측정을 통해 운전자의 음주 여부를 확인하고, 이를 통한 안전 운전 촉진에 목적을 두고 있음
+
+<br/><br/>
+<hr>
 
 ## 💻 역할
 
