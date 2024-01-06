@@ -22,7 +22,9 @@
 ➡ 회원가입
 
 <img src="https://github.com/moonjinho99/AlcoholEyeApp/assets/117807455/2d60cd73-b358-4692-a122-12625ea75a24" width="200" height="400">
+
 <br/>
+
 - 패스워드는 BCrypt HASH 함수로 암호화 하여 회원가입
   
 - 회원정보를 JSON 형식의 데이터로 서버에 전송하기 위해 Retorfit 라이브러리를 사용
