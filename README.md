@@ -28,27 +28,38 @@
 - 패스워드는 BCrypt HASH 함수로 암호화 하여 회원가입
   
 - 회원정보를 JSON 형식의 데이터로 서버에 전송하기 위해 Retorfit 라이브러리를 사용
+
+<br/><br/>
+<hr>
+
+➡ 로그인 후 검사화면
+
+<img src="https://github.com/moonjinho99/AlcoholEyeApp/assets/117807455/556fbcfb-126f-448f-a66a-b3a5e18ed374" width="200" height="400"> <img src="https://github.com/moonjinho99/AlcoholEyeApp/assets/117807455/0291b914-84ea-47ac-8d58-c627c38cb249" width="200" height="400"> <img src="https://github.com/moonjinho99/AlcoholEyeApp/assets/117807455/3774b3bb-1528-4baa-994f-f56bf0e734b1" width="200" height="400">
+
+<br/>
+
+- 사진을 웹 서버로 전송하여 회원의 사진과 일치하는 검사
+
+- 얼굴인식은 서버에서 FaceAPI.js를 이용하여 구현
+
+<br/><br/>
 <hr>
 
 ## 🔍 데이터 통신 방법
 
-![image](https://github.com/moonjinho99/FurinMatch_Android/assets/117807455/19585aa8-ffc7-4760-80e5-d7705802070a)
+![image](https://github.com/moonjinho99/AlcoholEyeApp/assets/117807455/2f47b523-4b07-42ac-a8a9-ab33a947a19e)
 
-➡ JSP서버를 통해 안드로이드에서 MySQL로 데이터를 주고 받는 형식으로 데이터를 주고 받음
+➡ JSON 형식으로 데이터를 주고 받음
 
-[JSP 서버](https://github.com/moonjinho99/FurniMatch-Web_JSP-)
-
+<br/><br/>
 <hr>
 
 ## 💡 이번 프로젝트를 통해 배운점
 
-➡ 안드로이드 스튜디오 내에 있는 Plugin을 통해 AR 기능 구현에 필요한 툴들을 받아 사용해 보면서 Plugin 사용방법에 익숙해짐
+➡ JSON 형식으로 통신을 해봄으로써 Retrofit 사용법에 익숙해짐
 
-➡ Scene Form을 사용하기위해 버전을 3.1.4로 낮추고 그에 맞게 다른 라이브러리의 버전을 맞추면서 버전 관리의 중요성에 대해 알게되었음
+➡ Retrofit
 
-➡ 비동기 통신을 이용해 서버와 통신을 하며 서버와 클라이언트에 대한 이해도가 높아짐
-
-➡ 채팅 기능 구현을 통해 Socket 통신의 개념 확립
-
+<br/><br/>
 <hr>
 
