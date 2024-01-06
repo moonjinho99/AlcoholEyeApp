@@ -1,7 +1,7 @@
 # alcoholEye
 음주 측정 앱 (안드로이드)
 
-서버 : 
+서버 : [alcoholEye](https://github.com/jhchon/alcoholEye)
 
 ## 📺 개발환경
 - <img src="https://img.shields.io/badge/IDE-%23121011?style=for-the-badge">![Android Studio](https://img.shields.io/badge/Android%20Studio-3DDC84.svg?&style=for-the-badge&logo=Android%20Studio&logoColor=white)<img src="https://img.shields.io/badge/3.1.4-515151?style=for-the-badge">
