@@ -1,5 +1,7 @@
 # alcoholEye
-음주 측정 앱
+음주 측정 앱 (안드로이드)
+
+서버 : 
 
 ## 📺 개발환경
 - <img src="https://img.shields.io/badge/IDE-%23121011?style=for-the-badge">![Android Studio](https://img.shields.io/badge/Android%20Studio-3DDC84.svg?&style=for-the-badge&logo=Android%20Studio&logoColor=white)<img src="https://img.shields.io/badge/3.1.4-515151?style=for-the-badge">
@@ -9,19 +11,9 @@
 <hr>
 
 
-## 📖 개요
-
-➡ 다른 품목들에 비해 가구는 중고거래를 할 때 가구를 직접 확인하고 거래하기가 쉽지 않음
-
-➡ 다른 품목들에 비해 구매하기전 가구를 직접 확인하기가 쉽지 않음
-
-<hr>
-
 ## 💻 역할
 
-➡ DB 설계
-
-➡ 백엔드, 프론트엔드 담당
+➡ 안드로이드 코드 작성
 
 <br/><br/>
 <hr>
