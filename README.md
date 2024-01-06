@@ -4,9 +4,8 @@
 서버 : [alcoholEye](https://github.com/jhchon/alcoholEye)
 
 ## 📺 개발환경
-- <img src="https://img.shields.io/badge/IDE-%23121011?style=for-the-badge">![Android Studio](https://img.shields.io/badge/Android%20Studio-3DDC84.svg?&style=for-the-badge&logo=Android%20Studio&logoColor=white)<img src="https://img.shields.io/badge/3.1.4-515151?style=for-the-badge">
+- <img src="https://img.shields.io/badge/IDE-%23121011?style=for-the-badge">![Android Studio](https://img.shields.io/badge/Android%20Studio-3DDC84.svg?&style=for-the-badge&logo=Android%20Studio&logoColor=white)
 - <img src="https://img.shields.io/badge/Language-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/java-%23ED8B00?style=for-the-badge&logo=openjdk&logoColor=white"><img src="https://img.shields.io/badge/18-515151?style=for-the-badge">
-- <img src="https://img.shields.io/badge/Project Encoding-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/UTF 8-EA2328?style=for-the-badge">
 
 <hr>
 
@@ -20,14 +19,13 @@
 
 ## ⭐ 주요기능
 
-➡ AR 기술을 통한 가구배치
+➡ 회원가입
 
-<img src="https://github.com/moonjinho99/FurinMatch_Android/assets/117807455/564b1fcc-0656-4204-a0d0-17ed155aafcd" width="200" height="250"><img src="https://github.com/moonjinho99/FurinMatch_Android/assets/117807455/2e05728e-13ee-4014-b74f-a122fa69e994" width="200" height="250"><img src="https://github.com/moonjinho99/FurinMatch_Android/assets/117807455/0a3cf697-32d3-4bf6-8bf6-b629fd32765a" width="200" height="250">
-
-➡ 채팅기능
-
-<img src="https://github.com/moonjinho99/FurinMatch_Android/assets/117807455/b8f49ee4-0dd9-4a81-a39b-de0ba6048303" width="200" height="250">
-
+<img src="https://github.com/moonjinho99/AlcoholEyeApp/assets/117807455/2d60cd73-b358-4692-a122-12625ea75a24" width="200" height="400">
+<br/>
+- 패스워드는 BCrypt HASH 함수로 암호화 하여 회원가입
+  
+- 회원정보를 JSON 형식의 데이터로 서버에 전송하기 위해 Retorfit 라이브러리를 사용
 <hr>
 
 ## 🔍 데이터 통신 방법
